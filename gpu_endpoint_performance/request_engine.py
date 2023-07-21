@@ -4,7 +4,7 @@ from gpu_endpoint_performance.timer import timer
 
 
 @timer
-async def make_post_request(url, data, timeout=1):
+async def make_post_request(url, data, timeout=600):
     try:
         response = requests.post(url, headers={"Content-Type": "application/json"}, data=data, timeout=timeout)
         response.raise_for_status()
