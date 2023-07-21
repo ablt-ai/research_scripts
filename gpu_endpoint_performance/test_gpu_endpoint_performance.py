@@ -28,13 +28,15 @@ def exec_async(data):
 
 @pytest.mark.parametrize("image_aspect", ['4x3', '16x9'])
 def test_image_aspects(image_aspect, benchmark):
-    image_path = f"test_data/{image_aspect}/cyberpunk.png"
+    image_path = f"https://github.com/ablt-ai/research_scripts/blob/main/gpu_endpoint_performance/" \
+                 f"test_data/{image_aspect}/cyberpunk.png"
     benchmark(exec_async, [image_path])
 
 
 @pytest.mark.parametrize("detail", ['1', '2', '3'])
 def test_image_complexity(detail, benchmark):
-    image_path = f"test_data/details/details_{detail}.png"
+    image_path = f"https://github.com/ablt-ai/research_scripts/blob/main/gpu_endpoint_performance/" \
+                 f"test_data/details/details_{detail}.png"
     benchmark(exec_async, [image_path])
 
 
@@ -48,12 +50,14 @@ def test_image_types(image_type, benchmark):
                                                         size['height']) for ratio, sizes in image_sizes.items() for size
                                                        in sizes])
 def test_image_sizes(aspect_ratio, width, height, benchmark):
-    image_path = f"test_data/sizes/toast_{aspect_ratio.replace(':', 'x')}_{width}x{height}.png"
+    image_path = f"https://github.com/ablt-ai/research_scripts/blob/main/gpu_endpoint_performance/" \
+                 f"test_data/sizes/toast_{aspect_ratio.replace(':', 'x')}_{width}x{height}.png"
     benchmark(exec_async, [image_path])
 
 
 @pytest.mark.parametrize("num", [1, 2, 3, 4, 5, 10])
 def test_simultaneous_requests(num, benchmark):
-    image_paths = [f"test_data/{random.choice(['4x3', '16x9'])}/{random.choice(image_names)}" for _ in range(num)]
+    image_paths = [f"https://github.com/ablt-ai/research_scripts/blob/main/gpu_endpoint_performance/" \
+                   f"test_data/{random.choice(['4x3', '16x9'])}/{random.choice(image_names)}" for _ in range(num)]
     benchmark(exec_async, [image_paths])
 
