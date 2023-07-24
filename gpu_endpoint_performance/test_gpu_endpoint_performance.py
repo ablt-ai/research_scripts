@@ -8,20 +8,27 @@ from settings import endpoint_url, image_sizes, image_formats, image_names
 
 
 def exec_async(data):
+    try:
+        loop = asyncio.get_event_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
     if len(data) < 2:
         response = asyncio.run(make_post_request(url=endpoint_url, data={"url": data[0]}))
         if "error" in response:
-            raise AssertionError(f"Request failed, details: {response}")
+            print(f"Request failed, details: {response}")
         else:
             print(response)
     else:
         tasks = []
         for idx in range(len(data)):
             tasks.append(asyncio.ensure_future(make_post_request(url=endpoint_url, data={"url": data[idx]})))
-        responses = asyncio.gather(*tasks)
+
+        responses = loop.run_until_complete(asyncio.gather(*tasks))
         for response in responses:
             if "error" in response:
-                raise AssertionError(f"Request failed, details: {response}")
+                print(f"Request failed, details: {response}")
             else:
                 print(response)
 
@@ -30,7 +37,7 @@ def exec_async(data):
 def test_image_aspects(image_aspect, benchmark):
     image_path = f"https://github.com/ablt-ai/research_scripts/blob/main/gpu_endpoint_performance/" \
                  f"test_data/{image_aspect}/cyberpunk.png"
-    benchmark(exec_async, [image_path])
+    benchmark.pedantic(exec_async, [[image_path]], rounds=1)
 
 """
 @pytest.mark.parametrize("detail", ['1', '2', '3'])

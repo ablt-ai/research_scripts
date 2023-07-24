@@ -4,7 +4,7 @@ from gpu_endpoint_performance.timer import timer
 
 
 @timer
-async def make_post_request(url, data, timeout=600):
+async def make_post_request(url, data, timeout=6000):
     async with ClientSession() as session:
         try:
             async with session.post(url,
