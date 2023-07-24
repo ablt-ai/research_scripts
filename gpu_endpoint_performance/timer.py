@@ -1,12 +1,12 @@
-from time import perf_counter
 from functools import wraps
+from time import perf_counter
 
 
 def timer(func):
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    async def wrapper(*args, **kwargs):
         start = perf_counter()
-        result = func(*args, **kwargs)
+        result = await func(*args, **kwargs)
         end = perf_counter()
         print(f"Function {func.__name__} took {end - start} ms")
         return result

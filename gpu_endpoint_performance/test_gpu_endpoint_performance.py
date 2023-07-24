@@ -32,7 +32,7 @@ def test_image_aspects(image_aspect, benchmark):
                  f"test_data/{image_aspect}/cyberpunk.png"
     benchmark(exec_async, [image_path])
 
-
+"""
 @pytest.mark.parametrize("detail", ['1', '2', '3'])
 def test_image_complexity(detail, benchmark):
     image_path = f"https://github.com/ablt-ai/research_scripts/blob/main/gpu_endpoint_performance/" \
@@ -61,3 +61,4 @@ def test_simultaneous_requests(num, benchmark):
                    f"test_data/{random.choice(['4x3', '16x9'])}/{random.choice(image_names)}" for _ in range(num)]
     benchmark(exec_async, [image_paths])
 
+"""

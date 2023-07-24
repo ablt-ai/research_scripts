@@ -1,19 +1,19 @@
-import requests
+from aiohttp import ClientSession
 
 from gpu_endpoint_performance.timer import timer
 
 
 @timer
 async def make_post_request(url, data, timeout=600):
-    try:
-        response = requests.post(url, headers={"Content-Type": "application/json"}, data=data, timeout=timeout)
-        response.raise_for_status()
-    except requests.exceptions.HTTPError as http_err:
-        return {"error": f"HTTP error occurred: {http_err}"}
-    except Exception as err:
-        return {"error": f"Other error occurred: {err}"}
-    else:
-        content = response.content
-        if "application/json" in response.headers["Content-Type"]:
-            content = response.json()
-        return {"status": response.status_code, "content": content}
+    async with ClientSession() as session:
+        try:
+            async with session.post(url,
+                                    headers={"Content-Type": "application/json"}, data=data,
+                                    timeout=timeout) as response:
+                response.raise_for_status()
+                content = await response.text()
+                if "application/json" in response.headers["Content-Type"]:
+                    content = await response.json()
+                return {"status": response.status, "content": content}
+        except Exception as err:
+            return {"error": f"Error occurred: {err}"}
