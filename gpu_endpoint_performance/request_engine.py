@@ -1,14 +1,17 @@
 from aiohttp import ClientSession
 
+import json
+
 from gpu_endpoint_performance.timer import timer
 
 
 @timer
-async def make_post_request(url, data, timeout=6000):
+async def make_post_request(url, data, timeout=60):
     async with ClientSession() as session:
         try:
             async with session.post(url,
-                                    headers={"Content-Type": "application/json"}, data=data,
+                                    headers={"Content-Type": "application/json"},
+                                    data=json.dumps({"url": data}),
                                     timeout=timeout) as response:
                 response.raise_for_status()
                 content = await response.text()

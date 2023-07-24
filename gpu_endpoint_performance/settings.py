@@ -1,4 +1,5 @@
 endpoint_url = "http://ablt-services.com/image_autodescribe"
+image_storage_url = "https://raw.githubusercontent.com/ablt-ai/research_scripts/main/gpu_endpoint_performance/test_data"
 data = '{"url":"s3://ablt-assets/test/images/cartoon-octopus-free.png"}'
 image_sizes = {
     "16:9": [{'width': 2048, 'height': 1152}, {'width': 3840, 'height': 2160}, {'width': 7680, 'height': 4320}, {'width': 1280, 'height': 720}, {'width': 640, 'height': 360}, {'width': 1920, 'height': 1080}, {'width': 480, 'height': 270}, {'width': 320, 'height': 180}, {'width': 32, 'height': 18}],
