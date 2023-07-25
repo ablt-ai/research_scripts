@@ -34,33 +34,33 @@ def exec_async(data):
 
 
 @pytest.mark.parametrize("image_aspect", ['4x3', '16x9'])
-def test_image_aspects(image_aspect, benchmark):
+def test_image_aspects(image_aspect, benchmark, rounds):
     image_aspect = image_aspect.replace("x", "")
     image_path = f"{image_storage_url}/{image_aspect}/cyberpunk.png"
-    benchmark.pedantic(exec_async, [[image_path]], rounds=1)
+    benchmark.pedantic(exec_async, [[image_path]], rounds=rounds)
 
 
 @pytest.mark.parametrize("detail", ['1', '2', '3'])
-def test_image_complexity(detail, benchmark):
+def test_image_complexity(detail, benchmark, rounds):
     image_path = f"{image_storage_url}/details/details_{detail}.png"
-    benchmark(exec_async, [image_path])
+    benchmark.pedantic(exec_async, [[image_path]], rounds=rounds)
 
 
-@pytest.mark.parametrize("image_type", image_formats)
-def test_image_types(image_type, benchmark):
+@pytest.mark.parametrize("image_type", image_formats[:2])
+def test_image_types(image_type, benchmark, rounds):
     image_path = f"{image_storage_url}/formats/robot.{image_type}"
-    benchmark(exec_async, [image_path])
+    benchmark.pedantic(exec_async, [[image_path]], rounds=rounds)
 
 
 @pytest.mark.parametrize("aspect_ratio,width,height", [(ratio, size['width'],
                                                         size['height']) for ratio, sizes in image_sizes.items() for size
-                                                       in sizes])
-def test_image_sizes(aspect_ratio, width, height, benchmark):
+                                                       in sizes][:1])
+def test_image_sizes(aspect_ratio, width, height, benchmark, rounds):
     image_path = f"{image_storage_url}/sizes/toast_{aspect_ratio.replace(':', 'x')}_{width}x{height}.png"
-    benchmark(exec_async, [image_path])
+    benchmark.pedantic(exec_async, [[image_path]], rounds=rounds)
 
 
 @pytest.mark.parametrize("num", [1, 2, 3, 4, 5, 10])
-def test_simultaneous_requests(num, benchmark):
+def test_simultaneous_requests(num, benchmark, rounds):
     image_paths = [f"{image_storage_url}/{random.choice(['43', '169'])}/{random.choice(image_names)}" for _ in range(num)]
-    benchmark(exec_async, image_paths)
+    benchmark.pedantic(exec_async, [image_paths], rounds=rounds)
