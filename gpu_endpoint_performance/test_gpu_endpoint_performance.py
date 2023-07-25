@@ -46,7 +46,7 @@ def test_image_complexity(detail, benchmark, rounds):
     benchmark.pedantic(exec_async, [[image_path]], rounds=rounds)
 
 
-@pytest.mark.parametrize("image_type", image_formats[:2])
+@pytest.mark.parametrize("image_type", image_formats)
 def test_image_types(image_type, benchmark, rounds):
     image_path = f"{image_storage_url}/formats/robot.{image_type}"
     benchmark.pedantic(exec_async, [[image_path]], rounds=rounds)
@@ -54,7 +54,7 @@ def test_image_types(image_type, benchmark, rounds):
 
 @pytest.mark.parametrize("aspect_ratio,width,height", [(ratio, size['width'],
                                                         size['height']) for ratio, sizes in image_sizes.items() for size
-                                                       in sizes][:1])
+                                                       in sizes])
 def test_image_sizes(aspect_ratio, width, height, benchmark, rounds):
     image_path = f"{image_storage_url}/sizes/toast_{aspect_ratio.replace(':', 'x')}_{width}x{height}.png"
     benchmark.pedantic(exec_async, [[image_path]], rounds=rounds)
