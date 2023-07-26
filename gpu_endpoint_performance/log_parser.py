@@ -15,7 +15,7 @@ def parse_log(file_path):
         if 'Request failed' in match:
             print(match.replace('PASSED', 'FAILED'))
 
-    with open('output.csv', 'w', newline='') as f:
+    with open('output_1.csv', 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(['Test Name', 'Variant', 'Execution Time', 'Result', 'Details'])
         for match in matches:
