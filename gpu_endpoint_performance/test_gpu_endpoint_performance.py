@@ -60,7 +60,7 @@ def test_image_sizes(aspect_ratio, width, height, benchmark, rounds, iterations)
     benchmark.pedantic(exec_async, [[image_path]], rounds=rounds, iterations=iterations)
 
 
-@pytest.mark.parametrize("num", [1, 2, 3, 4, 5, 10])
+@pytest.mark.parametrize("num", [1, 2, 3, 4, 5, 10, 25, 50, 100])
 def test_simultaneous_requests(num, benchmark, rounds, iterations):
     image_paths = [f"{image_storage_url}/{random.choice(['43', '169'])}/{random.choice(image_names)}" for _ in range(num)]
     benchmark.pedantic(exec_async, [image_paths], rounds=rounds, iterations=iterations)
