@@ -9,7 +9,8 @@ def convert_to_csv(filename):
         lines = table.split('\n')[1:-1]
         data = [re.split(r'\s{2,}', line) for line in lines]
         df = pd.DataFrame(data)
-        df.columns = ['Name (time in ms)', 'Min', 'Max', 'Mean', 'StdDev', 'Median', 'IQR', 'Outliers', 'OPS', 'Rounds', 'Iterations']  # добавляем заголовки
+        df.columns = ['Name (time in ms)', 'Min', 'Max', 'Mean', 'StdDev',
+                      'Median', 'IQR', 'Outliers', 'OPS', 'Rounds', 'Iterations']
         df = df.replace(r' \(\d+\.?\d*\)', '', regex=True)
         df = df.replace(r'\.', '', regex=True)
         df = df.replace(r',', '.', regex=True)
