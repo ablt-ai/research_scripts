@@ -14,8 +14,8 @@ def convert_to_csv(filename):
         df = df.replace(r' \(\d+\.?\d*\)', '', regex=True)
         df = df.replace(r'\.', '', regex=True)
         df = df.replace(r',', '.', regex=True)
-        #for col in df.columns[1:8]:
-        #    df[col] = df[col].apply(lambda x: '0' if x is None or not any(c in x for c in ['.', ',']) else x)
+        for col in df.columns[1:8]:
+            df[col] = df[col].apply(lambda x: '0.' + x if x is not None and not any(c in x for c in ['.', ',']) else x)
         df.to_csv('output.csv', index=False)
         print("output saved to output.csv")
 
