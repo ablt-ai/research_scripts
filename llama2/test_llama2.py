@@ -42,7 +42,6 @@ def exec_async(num):
         tasks = []
         for idx in range(num):
             prompt = random.choice(data)
-            print(f"RANDOM CHOICE {idx} : {prompt}")
             tasks.append(asyncio.ensure_future(api.post_prompt(api.promt_preprocessor(prompt))))
 
         responses = loop.run_until_complete(asyncio.gather(*tasks))

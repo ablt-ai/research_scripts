@@ -19,7 +19,7 @@ class Llama2API:
             prompt = json.dumps({"prompt": prompt})
         return prompt
 
-    async def post_prompt(self, prompt, timeout=30):
+    async def post_prompt(self, prompt, timeout=600):
         session_timeout = ClientTimeout(total=timeout, sock_connect=timeout, sock_read=timeout)
         async with ClientSession(timeout=session_timeout) as session:
             async with session.post(self.url, data=prompt, headers=self.headers) as response:
